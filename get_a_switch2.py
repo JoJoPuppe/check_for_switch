@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import time
 import random
 import os
+import sys
 import logging
 from logging.handlers import RotatingFileHandler
 from dotenv import load_dotenv
@@ -91,7 +92,7 @@ def is_available():
         consecutive_failures = 0
 
         soup = BeautifulSoup(response.text, "lxml")
-        if "Derzeit nicht verfügbar." in soup.text:
+        if "Derzeit nicht verfügbar" in soup.text:
             logger.info("Product is NOT available.")
             return False
         else:
@@ -117,6 +118,7 @@ def main():
             send_telegram_message(
                 "✅ Das Produkt ist jetzt verfügbar auf Amazon! https://www.amazon.de/Nintendo-Switch-Mario-Kart-World-Set/dp/B0F2J4SYJ2"
             )
+            sys.exit(0)
 
         wait_time = random.uniform(20, 50)
         logger.info(f"Sleeping for {wait_time:.2f} seconds.")
