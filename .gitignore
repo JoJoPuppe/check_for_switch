@@ -1,2 +1,3 @@
 venv
 get_a_switch2*.log
+.env
